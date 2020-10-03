@@ -25,7 +25,6 @@ def setUp():
     return
 
   # Create Database and connect via 
-  print('HIERHIERHEIHREIEHRIEHRIE')
   sqlite3.connect("db/cups.db")
 
   # creates the Tables in the SQLite DB
