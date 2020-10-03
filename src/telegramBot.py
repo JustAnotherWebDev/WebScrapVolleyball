@@ -1,13 +1,9 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import requests, time
+import requests, time, json
 
-
-API_KEY = "1235547402:AAGH6JzzkZaR09uwBDtgRc-l9aqgOqmtga4"
-
-
-print('Telegram Bot was read')
-#TODO: Create bot functionality and co here and let it be called :)
-
+json_file = open('util/security.json')
+API_KEY = json.load(json_file)["telegram_token"]
+print('API_KEY is: ', API_KEY)
 
 def start(update, context):
   """Send a message when the command /start is issued."""

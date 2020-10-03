@@ -15,5 +15,7 @@ class Cup:
     return str({'gender': self.gender, 'date': self.date, 'category': self.category, 'name': self.name, 'players': self.players, 'link': self.link})
 
   def __eq__(self, other):
-    return (self.gender, self.date, self.category, self.name, self.link) == (self.gender, self.date, self.category, self.name, self.link)
+    return (self.gender, self.date, self.category, self.name, self.link) == (other.gender, other.date, other.category, other.name, other.link)
   
+  def __ne__(self, other):
+    return not self.__eq__(other)

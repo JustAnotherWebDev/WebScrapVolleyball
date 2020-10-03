@@ -28,7 +28,6 @@ for row in result:
   cup_temp = Cup(row['gender'], row['date'], row['category'], row['name'], row['players'], row['link'])
   cups_saved.append(cup_temp)
 
-
 while True:
   # Reload the page with webdriver and get cups into soup2 
   driver.get("https://www.beachvolleyball.nrw")
@@ -62,11 +61,15 @@ while True:
 
   #Compare the found cups with the cups already found and saved in cups_saved
   cup_found = False
+  print('Cups found as number: ', len(cups_found))
+  print('Cups saved as number: ', len(cups_saved))
   for cup in cups_found:
-    if cup not in cups_saved: # TODO: For some unknown reason cups from cups_found are not in cups_saved ... # cups_saved has ZERO elements!!!
-      print('cups_saved contains x elements:  ', len(cups_saved))
+    if cup not in cups_saved:
       cup_found = True
       print('FOUND NEW CUP!')
+      #Add cup to the saved list
+      cups_saved.append(cup)
+      
       # insert() expects lmdb but is not neccessary, problem between sqlalchemy and pylint
       ins = db_cups.insert().values(id=cup.id, gender=cup.gender, date=cup.date, category=cup.category, name=cup.name, players=cup.players, link=cup.link)
       try:
@@ -77,7 +80,8 @@ while True:
           print(cup)
           print()
       tb.send_message(f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \n Angemeldet sind : {cup.players} Teams \n')
-
+    else:
+      print(f'Cup: {cup.id}  is in cups_saved: {cups_saved[0].id}')
   if cup_found == False:
     print('Was not able to find new cups!')
   time.sleep(60)
