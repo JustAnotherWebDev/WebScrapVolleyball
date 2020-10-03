@@ -2,10 +2,12 @@ import sqlite3
 import sqlalchemy
 import os, sys
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 
 metaData = MetaData()
-engine = create_engine('sqlite:///:memory:', echo=True)
+
+engine = create_engine('sqlite:///db/cups.db', echo=True)
+
 db_cups = Table('cups', metaData,
   Column('id', String, primary_key=True),
   Column('gender', String),
@@ -19,10 +21,11 @@ db_cups = Table('cups', metaData,
 def setUp():
   # Check if Database is available
   if os.path.exists("db/cups.db"):
-    print("Database was already created")
-    return None
+    print("Database was already created!")
+    return
 
-  # Create Database and connect via sqlalchemy
+  # Create Database and connect via 
+  print('HIERHIERHEIHREIEHRIEHRIE')
   sqlite3.connect("db/cups.db")
 
   # creates the Tables in the SQLite DB

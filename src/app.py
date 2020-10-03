@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from sqlalchemy.sql import select
+from sqlalchemy.sql import select, insert
 from bs4 import BeautifulSoup
 from cup import Cup
 import os
@@ -59,13 +59,20 @@ except IndexError as e:
   print('Cup that caused the IndexError: ', cup)
   print('Propably someone misstyped when creating a cup!!')
 
+cup_found = False
 for cup in cups_found:
   if cup not in cups_saved:
+    cup_found = True
     print('FOUND NEW CUP!')
     #print(cup)
     # TODO: Write Cup also into the DB!
+    
+    # insert() expects lmdb but is not neccessary, problem between sqlalchemy and pylint
     ins = db_cups.insert().values(id=cup.id, gender=cup.gender, date=cup.date, category=cup.category, name=cup.name, players=cup.players, link=cup.link)
     result = conn.execute(ins)
     print(result)
     # TODO: Call Telegram-Bot
     # Add Cup to cups_saved and into database
+
+if cup_found == False:
+  print('Was not able to find new cups!')

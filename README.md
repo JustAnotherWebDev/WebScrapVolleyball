@@ -12,3 +12,6 @@ Guides to follow to setup environment:
   cp chromedriver /usr/local/bin/  # is automatically in PATH
 
 
+# Why not a WhatsApp-Bot
+#WhatsApp doesn't allow an easy access to sending messages unlinke Telegram, so Telegram > WhatsApp for this and also privacy reasons
+
