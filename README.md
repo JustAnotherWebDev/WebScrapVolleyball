@@ -12,5 +12,3 @@ Guides to follow to setup environment:
   cp chromedriver /usr/local/bin/  # is automatically in PATH
 
 
-
-
