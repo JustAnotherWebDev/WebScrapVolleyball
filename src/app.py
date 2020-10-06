@@ -31,7 +31,12 @@ for row in result:
 while True:
   # Reload the page with webdriver and get cups into soup2 
   driver.get("https://www.beachvolleyball.nrw")
-  WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,".table-tournaments.table.table-hover")))
+  try:
+    WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,".table-tournaments.table.table-hover")))
+  except selenium.common.exceptions.TimeoutException as e:
+    print("Was not able to retrieve Webpage, will try again in 60 Seonds!")
+    time.sleep(60)
+    break
   soup1 = BeautifulSoup(driver.page_source, 'lxml')
   soup2 = soup1.find_all("tr", class_=lambda value: value and value.startswith("series"))
   cups_found = []
@@ -61,8 +66,6 @@ while True:
 
   #Compare the found cups with the cups already found and saved in cups_saved
   cup_found = False
-  print('Cups found as number: ', len(cups_found))
-  print('Cups saved as number: ', len(cups_saved))
   for cup in cups_found:
     if cup not in cups_saved:
       cup_found = True
@@ -79,9 +82,7 @@ while True:
           print(e)
           print(cup)
           print()
-      tb.send_message(f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \n Angemeldet sind : {cup.players} Teams \n')
-    else:
-      print(f'Cup: {cup.id}  is in cups_saved: {cups_saved[0].id}')
+      tb.send_message(f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
   if cup_found == False:
     print('Was not able to find new cups!')
   time.sleep(60)

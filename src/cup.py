@@ -10,7 +10,6 @@ class Cup:
     self.id = gender + date.replace(" ", "") + category + name + link
 
 
-
   def __str__(self):
     return str({'gender': self.gender, 'date': self.date, 'category': self.category, 'name': self.name, 'players': self.players, 'link': self.link})
 
