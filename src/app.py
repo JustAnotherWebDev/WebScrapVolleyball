@@ -39,7 +39,7 @@ while True:
     WebDriverWait(driver,10).until(EC.visibility_of_element_located((By.CSS_SELECTOR,".table-tournaments.table.table-hover")))
   except selenium.common.exceptions.TimeoutException as e:
     print("Was not able to retrieve Webpage, will try again in 60 Seonds!")
-    no_cups_found_counter++
+    no_cups_found_counter += 1
     time.sleep(60)
     break
   soup1 = BeautifulSoup(driver.page_source, 'lxml')
