@@ -13,12 +13,16 @@ def help_command(update, context):
   update.message.reply_text('Help-Function is not implemented yet!')
 
 def send_message(message):
-  print('Called send message()')
   url = f'https://api.telegram.org/bot{API_KEY}/sendMessage'
   data = {'chat_id': {-1001437326202}, 'text': message}
   requests.post(url, data).json()
   time.sleep(2)
-  
+
+def send_message_no_cups_found():
+  bot_message = 'There are no Cups that could be found even after 30 retries with a intervall of 60 seconds.\nPls look at the site or the programming, there seems to be a Problem!'
+  send_text = f'https://api.telegram.org/bot{API_KEY}/sendMessage?chat_id={CHAT_ID}&parse_mode=Markdown&text={bot_message}'
+  response = requests.get(send_text)
+  return response.json()
 
 def main():
   # Get the dispatcher to register handlers
