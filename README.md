@@ -2,16 +2,15 @@
 
 Guides to follow to setup environment:
 
-# This was propably not necessary
-#To be able to use Selenium within WSL 2 you have to install Net Core on the distro:
-#https://magenic.com/thinking/how-to-run-selenium-on-wsl-2
-
 # deposite chromedriver in distro:
-  sudo wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip chrome
-  sudo apt-get install zip unzip
+  # Install Chrome itsself
+  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  sudo apt -y install ./google-chrome-stable_current_amd64.deb
+  # Install Binary
+  sudo wget https://chromedriver.storage.googleapis.com/89.0.4389.23/chromedriver_linux64.zip
+  (optional) sudo apt-get install zip unzip
   unzip chrome_driver_linux64.zip
   sudo cp chromedriver /usr/local/bin/  # is automatically in PATH
-
 
 # Why not a WhatsApp-Bot
 #WhatsApp doesn't allow an easy access to sending messages unlinke Telegram, so Telegram > WhatsApp for this and also privacy reasons

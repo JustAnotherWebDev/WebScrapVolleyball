@@ -37,7 +37,8 @@ while True:
     if no_cups_found_counter > 10:
         tb.send_message_no_cups_found()
 
-    driver.get("https://www.beachvolleyball.nrw")
+    driver.get(
+        "https://www.beachvolleyball.nrw/tournaments/upcoming?ptl=800")
     try:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
