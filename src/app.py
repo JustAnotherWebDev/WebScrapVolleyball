@@ -61,9 +61,9 @@ while True:
             elif g_gender[7] == 'h':
                 a_gender = 'Herren'
             elif g_gender[7] == 'd':
-                a_gender = 'Herren'
+                a_gender = 'Damen'
             else:
-                a_gender = 'Senioren'
+                a_gender = 'Sonder'
             date = cup.find('td', class_="date").get_text()
             category = cup.find(
                 'span', class_="category-shorthandle").get_text()
