@@ -92,7 +92,7 @@ while True:
             name = cup.find('a').get_text()
             players = cup.find('td', class_="players").get_text()
             for l in cup.findAll('a'):
-                link = 'https://www.beachvolleyball.nrw/' + l.get('href')
+                link = 'https://www.beachvolleyball.nrw' + l.get('href')
             cups_found.append(
                 Cup(a_gender, date, category, name, players, link))
     except IndexError as e:
