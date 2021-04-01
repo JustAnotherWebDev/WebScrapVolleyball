@@ -62,6 +62,28 @@ while True:
                 a_gender = 'Herren'
             elif g_gender[7] == 'd':
                 a_gender = 'Damen'
+            elif g_gender[7] == 'u':
+                a_gender = 'Jugend'
+            elif g_gender[7] == 'uw':
+                a_gender = 'Jugend-Damen'
+            elif g_gender[7] == 'um':
+                a_gender = 'Jugend-Herren'
+            elif g_gender[7] == 'uem':
+                a_gender = 'Senioren-Herren'
+            elif g_gender[7] == 'uew':
+                a_gender = 'Senioren-Damen'
+            elif g_gender[7] == '4x4_d':
+                a_gender = '4x4-Damen'
+            elif g_gender[7] == '4x4_h':
+                a_gender = '4x4-Herren'
+            elif g_gender[7] == '4x4_m':
+                a_gender = '4x4-Mixed'
+            elif g_gender[7] == '4x4_um':
+                a_gender = '4x4-Jugend-Herren'
+            elif g_gender[7] == '4x4_uw':
+                a_gender = '4x4-Jugend-Damen'
+            elif g_gender[7] == '4x4_u':
+                a_gender = '4x4-Jugend-Mixed'
             else:
                 a_gender = 'Sonder'
             date = cup.find('td', class_="date").get_text()
