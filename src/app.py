@@ -29,7 +29,7 @@ s = select([db_cups])
 result = conn.execute(s)
 for row in result:
     cup_temp = Cup(row['gender'], row['date'], row['category'],
-                   row['name'], row['players'], row['link'], inform['inform'])
+                   row['name'], row['players'], row['link'], row['inform'])
     cups_saved.append(cup_temp)
 
 while True:
