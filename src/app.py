@@ -133,6 +133,6 @@ while True:
                     f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
             else:
                 print('Did not want to inform about new Cup!')
-        else:
-            print('Was not able to find new cups! Will try again in 5 Minutes')
+    if cup_found == False
+    print('Was not able to find new cups! Will try again in 5 Minutes')
     time.sleep(300)
