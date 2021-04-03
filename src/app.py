@@ -29,7 +29,7 @@ s = select([db_cups])
 result = conn.execute(s)
 for row in result:
     cup_temp = Cup(row['gender'], row['date'], row['category'],
-                   row['name'], row['players'], row['link'])
+                   row['name'], row['players'], row['link'], inform['inform'])
     cups_saved.append(cup_temp)
 
 while True:
@@ -55,6 +55,7 @@ while True:
     try:
         for cup in soup2:
             no_cups_found_counter = 0
+            inform = 1
             g_gender = cup['class'][0]
             if g_gender[7] == 'm':
                 a_gender = 'Mixed'
@@ -65,12 +66,16 @@ while True:
             elif g_gender[7] == 'u':
                 a_gender = 'Jugend'
             elif g_gender[7] == 'uw':
+                inform = 0
                 a_gender = 'Jugend-Damen'
             elif g_gender[7] == 'um':
+                inform = 0
                 a_gender = 'Jugend-Herren'
             elif g_gender[7] == 'uem':
+                inform = 0
                 a_gender = 'Senioren-Herren'
             elif g_gender[7] == 'uew':
+                inform = 0
                 a_gender = 'Senioren-Damen'
             elif g_gender[7] == '4x4_d':
                 a_gender = '4x4-Damen'
@@ -79,10 +84,13 @@ while True:
             elif g_gender[7] == '4x4_m':
                 a_gender = '4x4-Mixed'
             elif g_gender[7] == '4x4_um':
+                inform = 0
                 a_gender = '4x4-Jugend-Herren'
             elif g_gender[7] == '4x4_uw':
+                inform = 0
                 a_gender = '4x4-Jugend-Damen'
             elif g_gender[7] == '4x4_u':
+                inform = 0
                 a_gender = '4x4-Jugend-Mixed'
             else:
                 a_gender = 'Sonder'
@@ -94,7 +102,7 @@ while True:
             for l in cup.findAll('a'):
                 link = 'https://www.beachvolleyball.nrw' + l.get('href')
             cups_found.append(
-                Cup(a_gender, date, category, name, players, link))
+                Cup(a_gender, date, category, name, players, link, inform))
     except IndexError as e:
         print(e)
         print('Cup that caused the IndexError: ', cup)
@@ -110,8 +118,9 @@ while True:
             cups_saved.append(cup)
 
             # insert() expects lmdb but is not neccessary, problem between sqlalchemy and pylint
+            print()
             ins = db_cups.insert().values(id=cup.id, gender=cup.gender, date=cup.date,
-                                          category=cup.category, name=cup.name, players=cup.players, link=cup.link)
+                                          category=cup.category, name=cup.name, players=cup.players, link=cup.link, inform=cup.inform)
             try:
                 result = conn.execute(ins)
             except sqlalchemy.exc.IntegrityError as e:
@@ -119,8 +128,11 @@ while True:
                 print(e)
                 print(cup)
                 print()
-            tb.send_message(
-                f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
-    if cup_found == False:
-        print('Was not able to find new cups! Will try again in 5 Minutes')
+            if cup.inform == 1:
+                tb.send_message(
+                    f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
+            else:
+                print('Did not want to inform about new Cup!')
+        else:
+            print('Was not able to find new cups! Will try again in 5 Minutes')
     time.sleep(300)
