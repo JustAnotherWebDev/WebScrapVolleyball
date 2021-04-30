@@ -22,7 +22,7 @@ options.add_argument('--headless')
 
 driver = webdriver.Chrome(
     executable_path='/usr/local/bin/chromedriver', options=options)
-
+driver4x4 = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
 cups_saved = []
 no_cups_found_counter = 0
 s = select([db_cups])
@@ -38,7 +38,9 @@ while True:
         tb.send_message_no_cups_found()
 
     driver.get(
-        "https://www.beachvolleyball.nrw/?tournamentsPage=1&tournamentsLimit=800")
+        "https://www.beachvolleyball.nrw/?series=&tournamentsPage=1&tournamentsLimit=800")
+    time.sleep(60)
+    driver4x4.get("https://www.beachvolleyball.nrw/?series=&tournamentsLimit=800&tournamentsPage=1&tt=4x4")
     try:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
@@ -48,8 +50,11 @@ while True:
         time.sleep(300)
         break
     soup1 = BeautifulSoup(driver.page_source, 'lxml')
+    soup4x4 = BeautifulSoup(driver4x4.page_source, 'lxml').find_all(
+        "tr", class_=lambda value: value and value.startswith("series"))
     soup2 = soup1.find_all(
         "tr", class_=lambda value: value and value.startswith("series"))
+    soup2 += soup4x4
     cups_found = []
     # Extract information of each cup
     try:
