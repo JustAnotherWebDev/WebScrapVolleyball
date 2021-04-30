@@ -42,7 +42,7 @@ while True:
     try:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
-    except selenium.common.exceptions.TimeoutException as e:
+    except:
         print("Was not able to retrieve Webpage, will try again in 5 Minutes!")
         no_cups_found_counter += 1
         time.sleep(300)
