@@ -131,7 +131,7 @@ while True:
                 print()
             if cup.inform == 1:
                 tb.send_message(
-                    f'{cup.link} \nNeuer {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
+                    f'{cup.link} \nNeuer {cup.category} {cup.gender}-Cup in {cup.name} am {cup.date} \nAngemeldet sind : {cup.players} Teams \n')
             else:
                 print('Did not want to inform about new Cup!')
     if cup_found == False:
