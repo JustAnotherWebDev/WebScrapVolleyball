@@ -39,10 +39,13 @@ while True:
 
     driver.get(
         "https://www.beachvolleyball.nrw/?series=&tournamentsPage=1&tournamentsLimit=800")
-    time.sleep(60)
+    
     driver4x4.get("https://www.beachvolleyball.nrw/?series=&tournamentsLimit=800&tournamentsPage=1&tt=4x4")
     try:
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
+            
+        WebDriverWait(driver4x4, 10).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
     except:
         print("Was not able to retrieve Webpage, will try again in 5 Minutes!")
@@ -61,41 +64,44 @@ while True:
         for cup in soup2:
             no_cups_found_counter = 0
             inform = 1
-            g_gender = cup['class'][0]
-            if g_gender[7] == 'm':
+            s = cup['class'][0]
+            #print('\nthis is s:    ', s)
+            start = 'series-'
+            g_gender = s.replace(start, '')
+            if g_gender == 'm':
                 a_gender = 'Mixed'
-            elif g_gender[7] == 'h':
+            elif g_gender == 'h':
                 a_gender = 'Herren'
-            elif g_gender[7] == 'd':
+            elif g_gender == 'd':
                 a_gender = 'Damen'
-            elif g_gender[7] == 'u':
+            elif g_gender == 'u':
                 a_gender = 'Jugend'
                 inform = 0
-            elif g_gender[7] == 'uw':
+            elif g_gender == 'uw':
                 a_gender = 'Jugend-Damen'
                 inform = 0
-            elif g_gender[7] == 'um':
+            elif g_gender == 'um':
                 a_gender = 'Jugend-Herren'
                 inform = 0
-            elif g_gender[7] == 'uem':
+            elif g_gender == 'uem':
                 a_gender = 'Senioren-Herren'
                 inform = 0
-            elif g_gender[7] == 'uew':
+            elif g_gender == 'uew':
                 a_gender = 'Senioren-Damen'
                 inform = 0
-            elif g_gender[7] == '4x4_d':
+            elif g_gender == '4x4_d':
                 a_gender = '4x4-Damen'
-            elif g_gender[7] == '4x4_h':
+            elif g_gender == '4x4_h':
                 a_gender = '4x4-Herren'
-            elif g_gender[7] == '4x4_m':
+            elif g_gender == '4x4_m':
                 a_gender = '4x4-Mixed'
-            elif g_gender[7] == '4x4_um':
+            elif g_gender == '4x4_um':
                 inform = 0
                 a_gender = '4x4-Jugend-Herren'
-            elif g_gender[7] == '4x4_uw':
+            elif g_gender == '4x4_uw':
                 a_gender = '4x4-Jugend-Damen'
                 inform = 0
-            elif g_gender[7] == '4x4_u':
+            elif g_gender == '4x4_u':
                 a_gender = '4x4-Jugend-Mixed'
                 inform = 0
             else:
@@ -111,7 +117,7 @@ while True:
                 Cup(a_gender, date, category, name, players, link, inform))
     except IndexError as e:
         print(e)
-        print('Cup that caused the IndexError: ', cup)
+        print('Cup that caused the IndexError: \n', cup.prettify())
         print('Propably someone misstyped when creating a cup!!')
 
     # Compare the found cups with the cups already found and saved in cups_saved
