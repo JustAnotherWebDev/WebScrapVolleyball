@@ -146,4 +146,6 @@ while True:
                 print('Did not want to inform about new Cup!')
     if cup_found == False:
         print('Was not able to find new cups! Will try again in 30 Minutes')
-    time.sleep(1800)
+        time.sleep(1800)
+    time.sleep(10)
+    
