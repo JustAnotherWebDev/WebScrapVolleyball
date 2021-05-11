@@ -51,7 +51,6 @@ while True:
         print("Was not able to retrieve Webpage, will try again in 5 Minutes!")
         no_cups_found_counter += 1
         time.sleep(300)
-        break
     soup1 = BeautifulSoup(driver.page_source, 'lxml')
     soup4x4 = BeautifulSoup(driver4x4.page_source, 'lxml').find_all(
         "tr", class_=lambda value: value and value.startswith("series"))
