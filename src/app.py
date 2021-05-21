@@ -8,6 +8,7 @@ import sqlalchemy
 from cup import Cup
 import os
 import time
+import datetime
 import create_database as db
 import telegramBot as tb
 
@@ -37,11 +38,12 @@ while True:
     if no_cups_found_counter > 10:
         tb.send_message_no_cups_found()
 
-    driver.get(
+    try:
+        driver.get(
         "https://www.beachvolleyball.nrw/?series=&tournamentsPage=1&tournamentsLimit=800")
     
-    driver4x4.get("https://www.beachvolleyball.nrw/?series=&tournamentsLimit=800&tournamentsPage=1&tt=4x4")
-    try:
+        driver4x4.get("https://www.beachvolleyball.nrw/?series=&tournamentsLimit=800&tournamentsPage=1&tt=4x4")
+
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".table-tournaments.table.table-hover")))
             
@@ -145,7 +147,7 @@ while True:
             else:
                 print('Did not want to inform about new Cup!')
     if cup_found == False:
-        print('Was not able to find new cups! Will try again in 30 Minutes')
+        print('Was not able to find new cups at: ', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), '. Will try again in 30 Minutes')
         time.sleep(1800)
     time.sleep(10)
     
